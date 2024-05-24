@@ -62,7 +62,7 @@ function load_photos() {
     $page = isset($_POST['page']) ? intval($_POST['page']) : 1;
 
     $args = array(
-        'post_type' => 'photos',  // corrected to match the registered post type
+        'post_type' => 'photos',
         'posts_per_page' => 8,
         'paged' => $page,
         'orderby' => 'date',
@@ -104,7 +104,6 @@ function load_photos() {
         }
     }
 
-    // Log the response for debugging
     error_log(print_r($photos, true));
 
     wp_send_json($photos);

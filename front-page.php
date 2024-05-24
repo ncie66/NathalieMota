@@ -29,7 +29,7 @@ get_header(); ?>
     </div>
 
     <div id="photo-catalogue" class="photo-gallery">
-        <!-- Photos seront chargées ici via AJAX -->
+        <!-- les photos seront chargées ici via AJAX -->
     </div>
 
     <button id="load-more" data-page="1">Charger plus</button>
