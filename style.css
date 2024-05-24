@@ -1,0 +1,131 @@
+/*
+Theme Name: Mota
+Theme URI: Mota
+Author: Votre Nom
+Author URI: Yohann
+Description: Un thème WordPress personnalisé pour le projet photo.
+Version: 1.0
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Tags: custom-theme, photography
+Text Domain: theme-mota
+*/
+
+.hero {
+    width: 100%;
+    height: 400px;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+}
+
+.filters {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+
+.photo-gallery {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.photo-item {
+    width: 23%;
+    margin: 1%;
+    box-sizing: border-box;
+    position: relative;
+    border: 1px solid #ddd;
+    padding: 10px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.photo-item img {
+    width: 100%;
+    height: auto;
+}
+
+.photo-item h2 {
+    font-size: 16px;
+    margin: 10px 0 5px 0;
+}
+
+.photo-item p {
+    margin: 5px 0;
+    font-size: 14px;
+    color: #666;
+}
+
+.sl-caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+    font-size: 16px;
+}
+.photo-modal {
+    display: none; 
+    position: fixed;
+    z-index: 1000;
+    padding-top: 60px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.9);
+}
+
+.photo-modal-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    padding: 20px;
+    width: 80%;
+    background-color: white;
+}
+
+.photo-modal-left {
+    flex: 1;
+    padding: 20px;
+}
+
+.photo-modal-right {
+    flex: 1;
+    text-align: center;
+}
+
+.photo-modal img {
+    max-width: 100%;
+    height: auto;
+}
+
+.close {
+    position: absolute;
+    top: 15px;
+    right: 35px;
+    color: #fff;
+    font-size: 40px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.close:hover,
+.close:focus {
+    color: #bbb;
+    text-decoration: none;
+    cursor: pointer;
+}
+
