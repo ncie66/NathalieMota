@@ -38,7 +38,6 @@ document.addEventListener('DOMContentLoaded', () => {
                         modalCategory.innerText = `Catégorie : ${photo.category}`;
                         modalYear.innerText = `Année : ${photo.year}`;
                         modalFormat.innerText = `Format : ${photo.format}`;
-                        modalDate.innerText = `Date de prise de vue : ${photo.date}`;
                     });
                     catalogue.appendChild(photoItem);
                 });
