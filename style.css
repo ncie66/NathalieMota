@@ -10,6 +10,39 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Tags: custom-theme, photography
 Text Domain: theme-mota
 */
+body {
+    font-family: 'Abel', sans-serif;
+}
+
+h1 {
+    font-family: 'Abel', sans-serif;
+    font-size: 2.5em;
+    font-weight: bold;
+}
+
+h2 {
+    font-family: 'Abel', sans-serif;
+    font-size: 2em;
+    font-weight: bold;
+}
+
+h3 {
+    font-family: 'Abel', sans-serif;
+    font-size: 1.5em;
+    font-weight: normal;
+}
+
+.description-photo {
+    font-family: 'Abel', sans-serif;
+    font-size: 1em;
+    font-weight: normal;
+}
+
+p {
+    font-family: 'Abel', sans-serif;
+    font-size: 1em;
+    font-weight: normal;
+}
 
 .hero {
     width: 100%;
@@ -127,5 +160,33 @@ Text Domain: theme-mota
     color: #bbb;
     text-decoration: none;
     cursor: pointer;
+}
+
+.wpcf7-form-control.wpcf7-text,
+.wpcf7-form-control.wpcf7-email,
+.wpcf7-form-control.wpcf7-textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.wpcf7-form-control.wpcf7-submit {
+    background-color: #ccc;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin-top: 10px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.wpcf7-form-control.wpcf7-submit:hover {
+    background-color: #aaa;
 }
 

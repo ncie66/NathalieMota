@@ -9,8 +9,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const modalCategory = document.getElementById("photoCategory");
     const modalYear = document.getElementById("photoYear");
     const modalFormat = document.getElementById("photoFormat");
-    const modalDate = document.getElementById("photoDate");
     const span = document.getElementsByClassName("close")[0];
+    const photoRefField = document.querySelector("input[name='your-photo-ref']");
 
     const fetchPhotos = (page = 1) => {
         const params = new URLSearchParams({
@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 photos.forEach(photo => {
                     const photoItem = document.createElement('div');
                     photoItem.classList.add('photo-item');
-                    photoItem.innerHTML = `<a href="${photo.full}" data-title="${photo.title}" data-ref="${photo.ref}" data-category="${photo.category}" data-year="${photo.year}" data-format="${photo.format}" data-date="${photo.date}"><img src="${photo.thumbnail}" alt="${photo.title}"></a>`;
+                    photoItem.innerHTML = `<a href="${photo.full}" data-title="${photo.title}" data-ref="${photo.ref}" data-category="${photo.category}" data-year="${photo.year}" data-format="${photo.format}"><img src="${photo.thumbnail}" alt="${photo.title}"></a>`;
                     photoItem.querySelector('a').addEventListener('click', (e) => {
                         e.preventDefault();
                         modal.style.display = "block";
@@ -38,20 +38,13 @@ document.addEventListener('DOMContentLoaded', () => {
                         modalCategory.innerText = `Catégorie : ${photo.category}`;
                         modalYear.innerText = `Année : ${photo.year}`;
                         modalFormat.innerText = `Format : ${photo.format}`;
+                        if (photoRefField) {
+                            photoRefField.value = photo.ref;
+                        }
                     });
                     catalogue.appendChild(photoItem);
                 });
                 loadMoreButton.dataset.page = page + 1;
-
-                if (typeof SimpleLightbox !== 'undefined') {
-                    const lightbox = new SimpleLightbox('[data-lightbox="gallery"]', {
-                        captions: true,
-                        captionsData: 'data-title',
-                        captionPosition: 'bottom',
-                        captionDelay: 250,
-                    });
-                    lightbox.refresh();
-                }
             });
     };
 

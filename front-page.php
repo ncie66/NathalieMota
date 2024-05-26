@@ -29,27 +29,30 @@ get_header(); ?>
     </div>
 
     <div id="photo-catalogue" class="photo-gallery">
-        <!-- les photos seront chargées ici via AJAX -->
+        <!-- les photos seront chargées ici -->
     </div>
 
     <button id="load-more" data-page="1">Charger plus</button>
 
     <div id="photoModal" class="photo-modal">
-    <span class="close">&times;</span>
-    <div class="photo-modal-content">
-        <div class="photo-modal-left">
-            <h2 id="photoTitle"></h2>
-            <p id="photoRef"></p>
-            <p id="photoCategory"></p>
-            <p id="photoYear"></p>
-            <p id="photoFormat"></p>
-            <p id="photoDate"></p>
-        </div>
-        <div class="photo-modal-right">
-            <img id="photoImage" src="" alt="">
+        <span class="close">&times;</span>
+        <div class="photo-modal-content">
+            <div class="photo-modal-left">
+                <h2 id="photoTitle"></h2>
+                <p id="photoRef"></p>
+                <p id="photoCategory"></p>
+                <p id="photoFormat"></p>
+                <p id="photoYear"></p>
+               <!-- <p id="photoDate"></p> -->
+            </div>
+            <div class="photo-modal-right">
+                <img id="photoImage" src="" alt="">
+            </div>
+            <div class="photo-modal-form">
+                <?php echo do_shortcode('[contact-form-7 id="8846904" title="Formulaire de contact 1"]'); ?>
+            </div>
         </div>
     </div>
-</div>
 </main>
 
 <?php

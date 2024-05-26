@@ -2,6 +2,8 @@
 function mon_theme_enqueue_styles() {
     wp_enqueue_style('main-style', get_stylesheet_uri());
     wp_enqueue_script('script-js', get_template_directory_uri() . '/js/scripts.js', array('jquery'), null, true);
+    wp_enqueue_style('main-style', get_stylesheet_uri());
+    wp_enqueue_style('abel-font', 'https://fonts.googleapis.com/css2?family=Abel&display=swap', false);
     wp_localize_script('script-js', 'photoGallery', array(
         'ajaxUrl' => admin_url('admin-ajax.php')
     ));
