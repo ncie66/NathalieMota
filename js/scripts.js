@@ -175,12 +175,12 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const loadSuggestions = (ref) => {
-        console.log(`Loading suggestions for ref: ${ref}`); // Debugging
+        console.log(`Loading suggestions for ref: ${ref}`); // Debug
     
         fetch(`${photoGallery.ajaxUrl}?action=fetch_related_photos&ref=${ref}`)
             .then(response => response.json())
             .then(data => {
-                console.log('Data received:', data); // Debugging
+                console.log('Data received:', data); // Debug
                 if (data.success && data.data.photos) {
                     suggestionContainer.innerHTML = '';
                     data.data.photos.forEach(photo => {
@@ -191,12 +191,12 @@ document.addEventListener('DOMContentLoaded', () => {
                         suggestionContainer.appendChild(img);
                     });
                 } else {
-                    suggestionContainer.innerHTML = ''; // Clear the container if no related photos
+                    suggestionContainer.innerHTML = '';
                     console.error('Error fetching related photos:', data);
                 }
             })
             .catch(error => {
-                suggestionContainer.innerHTML = ''; // Clear the container on network error
+                suggestionContainer.innerHTML = '';
                 console.error('Network error:', error);
             });
     };
@@ -315,7 +315,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Gestion de la modale de contact pour la lightbox
-    const lightboxContactModal = document.getElementById("lightbox-contact-modal"); // Cibler le bon ID ici
+    const lightboxContactModal = document.getElementById("lightbox-contact-modal");
     const btnsLightboxContact = document.querySelectorAll(".contactFormModal");
     const spanLightboxContact = document.querySelector(".close-contact");
 
@@ -384,7 +384,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
     
-    // Empêcher la propagation des événements de clic sur le contenu des dropdowns
+    // Empêche la propagation des événements de clic sur le contenu des dropdowns
     const dropdownContents = document.querySelectorAll('.dropdown-content');
     dropdownContents.forEach(content => {
         content.addEventListener('click', (event) => {
