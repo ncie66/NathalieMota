@@ -198,5 +198,72 @@ function get_meta_values($key, $post_type) {
 add_action('wp_ajax_load_filters', 'load_filters');
 add_action('wp_ajax_nopriv_load_filters', 'load_filters');
 
+function fetch_related_photos() {
+    $ref = isset($_GET['ref']) ? sanitize_text_field($_GET['ref']) : '';
+
+    // Obtenir les informations de la photo actuelle
+    $current_photo = get_posts(array(
+        'post_type' => 'photos',
+        'meta_query' => array(
+            array(
+                'key' => 'reference_photo',
+                'value' => $ref,
+                'compare' => '='
+            )
+        )
+    ));
+
+    if (empty($current_photo)) {
+        wp_send_json_error('No related photos found.');
+    }
+
+    $current_photo_id = $current_photo[0]->ID;
+    $current_category = get_post_meta($current_photo_id, 'categorie', true);
+    $current_format = get_post_meta($current_photo_id, 'format', true);
+
+    // Obtenir les photos apparentées
+    $related_photos = get_posts(array(
+        'post_type' => 'photos',
+        'posts_per_page' => 2,
+        'post__not_in' => array($current_photo_id),
+        'meta_query' => array(
+            'relation' => 'AND',
+            array(
+                'key' => 'categorie',
+                'value' => $current_category,
+                'compare' => 'LIKE'
+            ),
+            array(
+                'key' => 'format',
+                'value' => $current_format,
+                'compare' => 'LIKE'
+            )
+        )
+    ));
+
+    if (empty($related_photos)) {
+        wp_send_json_error('No related photos found.');
+    }
+
+    $photos = array();
+
+    foreach ($related_photos as $photo) {
+        $photos[] = array(
+            'title' => get_the_title($photo->ID),
+            'thumbnail' => get_the_post_thumbnail_url($photo->ID, 'thumbnail'),
+            'full' => get_the_post_thumbnail_url($photo->ID, 'full'),
+            'ref' => get_post_meta($photo->ID, 'reference_photo', true),
+            'category' => get_post_meta($photo->ID, 'categorie', true),
+            'year' => get_post_meta($photo->ID, 'annee', true),
+            'format' => get_post_meta($photo->ID, 'format', true),
+            'date' => get_post_meta($photo->ID, 'date_de_prise_de_vue', true)
+        );
+    }
+
+    wp_send_json_success(array('photos' => $photos));
+}
+add_action('wp_ajax_fetch_related_photos', 'fetch_related_photos');
+add_action('wp_ajax_nopriv_fetch_related_photos', 'fetch_related_photos');
+
 
 ?>
