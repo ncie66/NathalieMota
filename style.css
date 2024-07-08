@@ -237,8 +237,9 @@ main{
     justify-content: space-between;
     align-items: center;
     max-width: 1200px;
-    margin: 0 auto;
+    margin: 15px auto;
     padding: 0 20px;
+    font-size: 20px;
 }
 
 nav ul {
@@ -571,7 +572,7 @@ nav ul li a {
 
 .preview-prev, .preview-next{
     left: 93%;
-    bottom: 34%;
+    bottom: 36%;
     width: 100px;
     height: 80px;
 }   
