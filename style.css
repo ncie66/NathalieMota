@@ -6,6 +6,10 @@ h1, h2, h3, p {
     font-family: 'Abel', sans-serif;
 }
 
+main{
+    margin-left: 10%;
+    margin-right: 10%;
+}
 .hero {
     width: 100%;
     height: 962px;
@@ -42,12 +46,14 @@ h1, h2, h3, p {
     display: flex;
     margin-top: 100px;
     margin-bottom: -100px;
+    margin-left: -12%;
+    margin-right: -14%;
 }
 
 .filtersLeft {
     display: flex;
     width: 720px;
-    margin-left: 23%;
+    margin-left: 19%;
     gap: 160px;
 }
 
@@ -55,7 +61,7 @@ h1, h2, h3, p {
     width: 300px;
     height: 43px;
     margin-left: auto;
-    margin-right: 22%;
+    margin-right: 20%;
 }
 
 .filters {
@@ -210,8 +216,8 @@ h1, h2, h3, p {
 .wpcf7-form-control.wpcf7-submit {
     background-color: #ccc;
     border: none;
-    color: white;
-    padding: 10px 20px;
+    color: black;
+    padding: 24px 120px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
@@ -219,6 +225,7 @@ h1, h2, h3, p {
     margin-top: 10px;
     cursor: pointer;
     border-radius: 4px;
+    margin-left: 1%;
 }
 
 .wpcf7-form-control.wpcf7-submit:hover {
@@ -266,10 +273,13 @@ nav ul li a {
 .modal-content {
     background-color: #fff;
     margin: 15% auto;
-    padding: 40px;
     border: 1px solid #888;
-    width: 80%;
-    max-width: 400px;
+    max-width: 600px;
+}
+
+.wpcf7{
+    margin-left: 25%;
+    margin-right: 25%;
 }
 
 .load-more{
@@ -393,7 +403,6 @@ nav ul li a {
 }
 
 .photo-modal {
-    display: none;
     position: fixed;
     z-index: 1000;
     padding-top: 60px;
@@ -516,7 +525,8 @@ nav ul li a {
 .containerSuggestion{
     display: flex;
     justify-content: space-between;
-    width: 100%;
+    width: 80%;
+    margin: 0 auto;
 }
 
 .suggestion-image{
@@ -529,6 +539,8 @@ nav ul li a {
     margin-bottom: 50px!important;
     position: relative!important;
     object-fit: cover!important;
+    margin-right: 35px!important;
+    margin-left: 35px!important; 
 }
 
 .close {
@@ -554,24 +566,26 @@ nav ul li a {
     height: 100px;
     object-fit: cover;
     display: none;
+    z-index: 1;
 }
 
-.preview-prev {
-    left: 91%;
+.preview-prev, .preview-next{
+    left: 93%;
     bottom: 34%;
-    width: 3%;
+    width: 100px;
+    height: 80px;
 }   
-.preview-next {
-    left: 96%;
-    bottom: 34%;
-    width: 3%;
-}
+
+
 
 .modal-navigation img:hover + .preview-prev,
 .modal-navigation img:hover + .preview-next {
     display: block;
 }
 
+.photoContactForm{
+    width: 100%;;
+}
 
 /* Modale Fullscreen */
 .fullscreen-modal {
@@ -592,6 +606,7 @@ nav ul li a {
     display: block;
     width: 80%;
     max-width: 700px;
+    margin-top: 6%;
 }
 
 .close-fullscreen {
@@ -688,11 +703,12 @@ nav ul li a {
         display: none;
         flex-direction: column;
         position: absolute;
-        top: 60px;
-        left: 0;
+        top: 100px;
+        left: 2px;
         width: 100%;
         background-color: #fff;
-        padding: 10px 0;
+        padding: 10px 4px;
+        font-size: 20px;
     }
 
     nav ul.open {
@@ -705,8 +721,13 @@ nav ul li a {
     .AllFilter {
         flex-direction: column;
         align-items: center;
-        margin-top: 20px;
+     /*   margin-top: 5px!important;*/
         margin-bottom: 20px;
+        display: flex;
+        margin-top: -287px;
+        margin-bottom: -100px;
+        margin-left: -12%;
+        margin-right: -14%;
     }
 
     .filtersLeft, .filtersRight {
@@ -769,12 +790,52 @@ nav ul li a {
     }
 
     .suggestion-image {
-        width: 100%;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        width: 421px !important;
+        height: 600px !important;
+        overflow: hidden !important;
+        margin-bottom: 50px !important;
+        position: relative !important;
+        object-fit: cover !important;
+        margin-right: 35px !important;
+        margin-left: 35px !important;
     }
 
     .close {
         top: 10px;
         right: 10px;
         font-size: 30px;
-    }    
+    }
+    .footer {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+        background-color: #f8f8f8; /* Ajustez la couleur de fond selon vos besoins */
+    }
+    
+    .footer-links {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+    
+    .footer-links ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+    
+    .footer-links ul li {
+        margin-bottom: 10px; /* Ajustez cette valeur pour contrôler l'espacement entre les éléments de la liste */
+    }
+    
+    .footer-links ul li a {
+        text-decoration: none;
+        color: #000; /* Ajustez la couleur du texte selon vos besoins */
+    }
+    
 }

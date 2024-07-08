@@ -73,53 +73,6 @@ get_header(); ?>
         <div class="load-more">
             <button id="load-more" data-page="1">Charger plus</button>
         </div>
-
-        <div id="photoModal" class="photo-modal">
-            <span class="close">&times;</span>
-            <div class="photo-modal-content">
-                <div class="photo-modal-principal">
-                    <div class="photo-modal-left">
-                        <h2 id="photoTitle"></h2>
-                        <p id="photoRef"></p>
-                        <p id="photoCategory"></p>
-                        <p id="photoFormat"></p>
-                        <p id="photoYear"></p>
-                    </div>
-                    <div class="photo-modal-right">
-                        <img id="photoImage" src="" alt="">
-                    </div>
-                </div>
-                <div class="photo-modal-form">
-                    <div class="containerContact">
-                        <p>Cette photo vous intéresse ?</p>
-                        <button type="button" class="contactFormModal" data-reference="">Contact</button>
-                    </div>
-                    <div class="containerNav">
-                        <div class="Prevbtn">
-                            <img class="prev" src="<?php echo get_stylesheet_directory_uri(); ?>/images/prev.png" alt="Précédent">
-                            <img class="preview-prev" id="previewPrev" src="" alt="Aperçu Précédent">
-                        </div>
-                        <div class="Nextbtn">
-                            <img class="next" src="<?php echo get_stylesheet_directory_uri(); ?>/images/next.png" alt="Suivant">
-                            <img class="preview-next" id="previewNext" src="" alt="Aperçu Suivant">
-                        </div>
-                        
-                    </div>
-                </div>
-                <p class="suggestionP">Vous aimerez aussi</p>
-                <div class="containerSuggestion">
-                    <div class="containerSuggestionImage">
-                </div>             
-                <div id="lightbox-contact-modal" class="modal">
-                    <div class="modal-content">
-                        <span class="close-contact">&times;</span>
-                        <h2>Contactez-nous</h2>
-                        <?php echo do_shortcode('[contact-form-7 id="8846904" title="Formulaire de contact 1"]'); ?>
-                        <input type="hidden" name="your-photo-ref" value="">
-                    </div>
-                </div>
-            </div>
-        </div>
     </main>
 
 <?php

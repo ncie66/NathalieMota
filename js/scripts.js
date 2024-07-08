@@ -1,4 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
+    
+    
     const heroSection = document.getElementById('hero-section');
     const fullscreenModal = document.getElementById("fullscreenModal");
     const fullscreenImage = document.getElementById("fullscreenImage");
@@ -7,46 +9,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const closeFullscreen = document.querySelector(".close-fullscreen");
     const prevFull = document.querySelector(".prevFull");
     const nextFull = document.querySelector(".nextFull");
-
     const photoModal = document.getElementById("photoModal");
+    const prevButton = document.querySelector(".Prevbtn .prev");
+    const nextButton = document.querySelector(".Nextbtn .next");
     const previewPrev = document.getElementById("previewPrev");
     const previewNext = document.getElementById("previewNext");
 
-    const fetchRandomPhoto = () => {
-        fetch(photoGallery.ajaxUrl, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            body: new URLSearchParams({
-                action: photoGallery.getRandomPhotoAction
-            })
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                const img = document.createElement('img');
-                img.src = data.data;
-                img.alt = 'Photo du hero';
-                img.classList.add('hero-content-img');
-        
-                const existingImg = heroSection.querySelector('.hero-content-img');
-                if (existingImg) {
-                    heroSection.replaceChild(img, existingImg);
-                } else {
-                    heroSection.appendChild(img);
-                }
-            }
-        });
-    };
-    
-    fetchRandomPhoto();
-    
-
-
     const loadMoreButton = document.querySelector('#load-more');
     const catalogue = document.querySelector('#photo-catalogue');
-    const modalPhoto = document.getElementById("photoModal");
     const modalImage = document.getElementById("photoImage");
     const modalTitle = document.getElementById("photoTitle");
     const modalRef = document.getElementById("photoRef");
@@ -54,17 +24,50 @@ document.addEventListener('DOMContentLoaded', () => {
     const modalYear = document.getElementById("photoYear");
     const modalFormat = document.getElementById("photoFormat");
     const spanPhoto = document.querySelector(".photo-modal .close");
-    const prevButton = document.querySelector(".containerNav .prev");
-    const nextButton = document.querySelector(".containerNav .next");
     const photoRefField = document.querySelector("input[name='your-photo-ref']");
-    const suggestionContainer = document.querySelector(".containerSuggestion");
 
     let currentCategory = '';
     let currentFormat = '';
     let currentSortOrder = 'desc';
     let photos = [];
-    let currentIndex = -1;
+    let currentIndex = 0;
 
+    const loadedPhotoRefs = new Set();
+
+    console.log("Script loaded, initializing...");
+
+    const fetchRandomPhoto = () => {
+        if (heroSection) {
+            fetch(photoGallery.ajaxUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: new URLSearchParams({
+                    action: photoGallery.getRandomPhotoAction
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    const img = document.createElement('img');
+                    img.src = data.data;
+                    img.alt = 'Photo du hero';
+                    img.classList.add('hero-content-img');
+            
+                    const existingImg = heroSection.querySelector('.hero-content-img');
+                    if (existingImg) {
+                        heroSection.replaceChild(img, existingImg);
+                    } else {
+                        heroSection.appendChild(img);
+                    }
+                }
+            });
+        }
+    };
+
+    fetchRandomPhoto();
+    
     const fetchPhotos = (page = 1) => {
         const params = new URLSearchParams({
             action: 'load_photos',
@@ -73,7 +76,9 @@ document.addEventListener('DOMContentLoaded', () => {
             sort_order: currentSortOrder,
             page
         });
-
+        console.log("Fetching photos with params:", params.toString());
+        console.log("AJAX URL:", photoGallery.ajaxUrl);
+    
         fetch(photoGallery.ajaxUrl, {
             method: 'POST',
             headers: {
@@ -81,27 +86,45 @@ document.addEventListener('DOMContentLoaded', () => {
             },
             body: params
         })
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
         .then(fetchedPhotos => {
-            if (page === 1) catalogue.innerHTML = '';
+            if (!Array.isArray(fetchedPhotos)) {
+                throw new Error('Fetched data is not an array');
+            }
+            if (page === 1) {
+                catalogue.innerHTML = '';
+                photos = [];
+                loadedPhotoRefs.clear();
+            }
             fetchedPhotos.forEach(photo => {
-                photos.push(photo);
-                const photoItem = document.createElement('div');
-                photoItem.classList.add('photo-item');
-                photoItem.innerHTML = `
-                <div class="photo-container">
-                    <img src="${photo.thumbnail}" alt="${photo.title}">
-                    <div class="overlay">
-                        <span class="overlay-icon-view"><img src="${photoGallery.galleryUrl}/Group.png" data-index="${photos.length - 1}" class="view-icon"></span>
-                        <span class="overlay-icon-full"><img src="${photoGallery.galleryUrl}/Icon_fullscreen.png" data-full="${photo.full}" data-ref="${photo.ref}" data-category="${photo.category}" class="fullscreen-icon"></span>
-                    </div>
-                </div>`;
-                catalogue.appendChild(photoItem);
+                if (!loadedPhotoRefs.has(photo.ref)) {
+                    photos.push(photo);
+                    loadedPhotoRefs.add(photo.ref);
+    
+                    const photoItem = document.createElement('div');
+                    photoItem.classList.add('photo-item');
+                    photoItem.innerHTML = `
+                        <div class="photo-container">
+                            <img src="${photo.thumbnail}" alt="${photo.title}">
+                            <div class="overlay">
+                                <span class="overlay-icon-view"><img src="${photoGallery.galleryUrl}/Group.png" data-index="${photos.length - 1}" class="view-icon" data-ref="${photo.ref}"></span>
+                                <span class="overlay-icon-full"><img src="${photoGallery.galleryUrl}/Icon_fullscreen.png" data-full="${photo.full}" data-ref="${photo.ref}" data-category="${photo.category}" class="fullscreen-icon"></span>
+                            </div>
+                        </div>`;
+                    catalogue.appendChild(photoItem);
+                }
             });
             loadMoreButton.dataset.page = page + 1;
         });
     };
 
+    fetchPhotos();
+    
     const showPrevPhotoFullscreen = () => {
         if (currentIndex > 0) {
             currentIndex--;
@@ -126,20 +149,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    const showPrevPhoto = () => {
-        if (currentIndex > 0) {
-            currentIndex--;
-            showPhoto(currentIndex);
-        }
-    };
-    
-    const showNextPhoto = () => {
-        if (currentIndex < photos.length - 1) {
-            currentIndex++;
-            showPhoto(currentIndex);
-        }
-    };
-    
     const updateNavigationPrevNext = () => {
         const prevThumbnail = currentIndex > 0 ? photos[currentIndex - 1].thumbnail : '';
         const nextThumbnail = currentIndex < photos.length - 1 ? photos[currentIndex + 1].thumbnail : '';
@@ -174,38 +183,20 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    const loadSuggestions = (ref) => {
-        console.log(`Loading suggestions for ref: ${ref}`); // Debug
-    
-        fetch(`${photoGallery.ajaxUrl}?action=fetch_related_photos&ref=${ref}`)
-            .then(response => response.json())
-            .then(data => {
-                console.log('Data received:', data); // Debug
-                if (data.success && data.data.photos) {
-                    suggestionContainer.innerHTML = '';
-                    data.data.photos.forEach(photo => {
-                        const img = document.createElement('img');
-                        img.src = photo.thumbnail;
-                        img.alt = photo.title;
-                        img.classList.add('suggestion-image');
-                        suggestionContainer.appendChild(img);
-                    });
-                } else {
-                    suggestionContainer.innerHTML = '';
-                    console.error('Error fetching related photos:', data);
-                }
-            })
-            .catch(error => {
-                suggestionContainer.innerHTML = '';
-                console.error('Network error:', error);
-            });
-    };
+   
 
     document.addEventListener('click', (event) => {
         if (event.target.classList.contains('view-icon')) {
-            const index = parseInt(event.target.dataset.index, 10);
-            showPhoto(index);
+            const photoRef = event.target.getAttribute('data-ref');
+            if (photoRef && photoRef !== 'undefined') {
+                const url = `wp-content/themes/Mota/photo-detail.php?photo_ref=${photoRef}`;
+                console.log("Redirecting to:", url);
+                window.location.href = url;
+            } else {
+                console.error('Photo ref is undefined or invalid');
+            }
         }
+    
         if (event.target.classList.contains('fullscreen-icon')) {
             const fullImageUrl = event.target.dataset.full;
             const photoRef = event.target.dataset.ref;
@@ -231,13 +222,14 @@ document.addEventListener('DOMContentLoaded', () => {
         };
     }
 
-    if (prevButton) {
-        prevButton.onclick = showPrevPhoto;
-    }
-
-    if (nextButton) {
-        nextButton.onclick = showNextPhoto;
-    }
+    /*window.addEventListener('click', (event) => {
+        if (event.target == modalPhoto) {
+            modalPhoto.style.display = "none";
+        }
+        if (event.target == fullscreenModal) {
+            fullscreenModal.style.display = "none";
+        }
+    });*/
 
     if (prevFull) {
         prevFull.onclick = showPrevPhotoFullscreen;
@@ -246,43 +238,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (nextFull) {
         nextFull.onclick = showNextPhotoFullscreen;
     }
-
-    if (prevButton) {
-        prevButton.addEventListener('mouseover', () => {
-            if (currentIndex > 0) {
-                const prevPhoto = photos[currentIndex - 1];
-                previewPrev.src = prevPhoto.thumbnail;
-                previewPrev.style.display = 'block';
-            }
-        });
-
-        prevButton.addEventListener('mouseout', () => {
-            previewPrev.style.display = 'none';
-        });
-    }
-
-    if (nextButton) {
-        nextButton.addEventListener('mouseover', () => {
-            if (currentIndex < photos.length - 1) {
-                const nextPhoto = photos[currentIndex + 1];
-                previewNext.src = nextPhoto.thumbnail;
-                previewNext.style.display = 'block';
-            }
-        });
-
-        nextButton.addEventListener('mouseout', () => {
-            previewNext.style.display = 'none';
-        });
-    }
-
-    window.addEventListener('click', (event) => {
-        if (event.target == modalPhoto) {
-            modalPhoto.style.display = "none";
-        }
-        if (event.target == fullscreenModal) {
-            fullscreenModal.style.display = "none";
-        }
-    });
 
     if (closeFullscreen) {
         closeFullscreen.onclick = () => {
@@ -313,36 +268,6 @@ document.addEventListener('DOMContentLoaded', () => {
             navContactModal.style.display = "none";
         }
     }
-
-    // Gestion de la modale de contact pour la lightbox
-    const lightboxContactModal = document.getElementById("lightbox-contact-modal");
-    const btnsLightboxContact = document.querySelectorAll(".contactFormModal");
-    const spanLightboxContact = document.querySelector(".close-contact");
-
-    btnsLightboxContact.forEach(btn => {
-        btn.addEventListener('click', function() {
-            lightboxContactModal.style.display = "block";
-            const reference = this.getAttribute('data-reference');
-            const refInput = lightboxContactModal.querySelector('input[name="your-photo-ref"]');
-            if (refInput) {
-                refInput.value = reference;
-            }
-        });
-    });
-
-    if (spanLightboxContact) {
-        spanLightboxContact.onclick = function() {
-            lightboxContactModal.style.display = "none";
-        }
-    }
-
-    window.onclick = function(event) {
-        if (event.target == lightboxContactModal) {
-            lightboxContactModal.style.display = "none";
-        }
-    }
-
-
 
     let isDropdownClicked = false;
 

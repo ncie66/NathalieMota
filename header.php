@@ -30,12 +30,10 @@
         </div>
     </header>
 
-
     <section class="hero" id="hero-section">
 
         <div class="hero-content">
             <h1 class="hero-title">PHOTOGRAPHE EVENT</h1>
-
         </div>
 
     </section>
